@@ -1,0 +1,52 @@
+<div class="text-center">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            請選擇類別
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <form action="/record/category" method="GET">
+                <button type="submit" name="category" value="food" class="dropdown-item form-control">食</button>
+            </form>
+            <form action="/record" method="GET">
+                <button type="submit" name="category" value="clothing" class="dropdown-item">衣</button>
+            </form>
+            <form action="/record" method="GET">
+                <button type="submit" name="category" value="housing" class="dropdown-item">住</button>
+            </form>
+            <form action="/record" method="GET">
+                <button type="submit" name="category" value="transportation" class="dropdown-item">行</button>
+            </form>
+            <form action="/record" method="GET">
+                <button type="submit" name="category" value="education" class="dropdown-item">育</button>
+            </form>
+            <form action="/record" method="GET">
+                <button type="submit" name="category" value="entertainment" class="dropdown-item">樂</button>
+            </form>
+        </div>
+    </div>
+    <div class="">
+        總金額:<span class="display-2">99999</span>
+    </div>
+    <div>
+        <div class="row">
+            <div class="row col-8">
+                <div class="m-auto">
+                    <div class="">午餐</div>
+                    <div class="">2019/10/1</div>
+                </div>
+                <div class="m-auto">
+                    $<span>60</span>   
+                </div>
+            </div>
+            <div class="row col-4">
+                <a href="/record/edit" class="btn btn-secondary align-items-center">修改</a>
+                <form action="/record/delete?_method=DELETE" method="POST" >
+                    <button type="submit" class="btn btn-outline-warning">刪除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a href="/record/new" class="btn btn-primary">新增支出</a>
+
+
+</div>
