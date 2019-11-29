@@ -1,52 +1,43 @@
 <div class="text-center">
+    
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             請選擇類別
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <form action="/" method="GET">
-                <button type="submit" name="category" value="food" class="dropdown-item form-control">食</button>
-            </form>
-            <form action="/" method="GET">
-                <button type="submit" name="category" value="clothing" class="dropdown-item">衣</button>
-            </form>
-            <form action="/" method="GET">
-                <button type="submit" name="category" value="housing" class="dropdown-item">住</button>
-            </form>
-            <form action="/" method="GET">
-                <button type="submit" name="category" value="transportation" class="dropdown-item">行</button>
-            </form>
-            <form action="/" method="GET">
-                <button type="submit" name="category" value="education" class="dropdown-item">育</button>
-            </form>
-            <form action="/" method="GET">
-                <button type="submit" name="category" value="entertainment" class="dropdown-item">樂</button>
-            </form>
+            <a href="/" class="dropdown-item">不分類</a>
+            <a href="/housing" class="dropdown-item">家居物業</a>
+            <a href="/transportation" class="dropdown-item">交通出行</a>
+            <a href="/entertainment" class="dropdown-item">休閒娛樂</a>
+            <a href="/food" class="dropdown-item">餐飲食品</a>
+            <a href="/other" class="dropdown-item">其他</a>
         </div>
     </div>
+    <h1>{{category.forH1}}</h1>
     <div class="">
-        總金額:<span class="display-2">99999</span>
+        總金額:<span class="display-2">{{totalAmount}}</span>
     </div>
     <div>
+        {{#each records}}
         <div class="row">
             <div class="row col-8">
                 <div class="m-auto">
-                    <div class="">午餐</div>
-                    <div class="">2019/10/1</div>
+                    <div class="">{{this.name}}</div>
+                    <div class="">{{this.date}}</div>
                 </div>
                 <div class="m-auto">
-                    $<span>60</span>   
+                    $<span>{{this.amount}}</span>   
                 </div>
             </div>
             <div class="row col-4">
-                <a href="/record/edit" class="btn btn-secondary align-items-center">修改</a>
-                <form action="/record/delete?_method=DELETE" method="POST" >
+                <a href="/record/edit/{{this._id}}" class="btn btn-secondary align-items-center">修改</a>
+                <form action="/record/{{this._id}}/delete?_method=DELETE" method="POST" >
                     <button type="submit" class="btn btn-outline-warning">刪除</button>
                 </form>
             </div>
         </div>
+        {{/each}}
     </div>
+    
     <a href="/record/new" class="btn btn-primary">新增支出</a>
-
-
 </div>

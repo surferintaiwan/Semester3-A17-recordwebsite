@@ -3,6 +3,22 @@ const app = express()
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const mongoose = require('mongoose')
+
+// 使用moogoose
+mongoose.connect('mongodb://localhost/record', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+const db = mongoose.connection
+db.on('error',()=>{
+    console.log('mongoDB error!')
+})
+
+db.on('open',()=>{
+    console.log('mongoDB connected!')
+})
 
 // 使用express-handlebars
 app.engine('handlebars', exphbs({defaultLayout: 'main'}))
