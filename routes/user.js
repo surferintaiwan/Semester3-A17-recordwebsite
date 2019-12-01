@@ -67,14 +67,4 @@ router.get('/logout', (req, res)=>{
     res.redirect('/user/login')
 })
 
-// facebook登入用
-router.get('', (req, res) => {
-
-})
-
-// facebook callback用
-router.get(''), (req, res) => {
-
-}
-
 module.exports = router

@@ -7,6 +7,11 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const passport = require('passport')
 
+// 判別開發環境，使用環境變數
+if (process.env.NODE_ENV !== 'production') {      
+    require('dotenv').config()                    
+  }
+
 // 使用moogoose
 mongoose.connect('mongodb://localhost/record', {
   useNewUrlParser: true,
@@ -64,6 +69,8 @@ app.use('/', require('./routes/home.js'))
 app.use('/user', require('./routes/user.js'))
 // /user
 app.use('/record', require('./routes/record.js'))
+// /auth
+app.use('/auth', require('./routes/auth.js'))
 
 
 app.listen(3000, () => {

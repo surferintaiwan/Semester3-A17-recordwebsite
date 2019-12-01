@@ -1,9 +1,14 @@
 const LocalStrategy = require('passport-local').Strategy
+const FacebookStrategy = require('passport-facebook')
 const mongoose = require('mongoose')
 const User = require('../models/user.js')
 const bcrypt = require('bcryptjs')
+
+
 module.exports = passport => {
-  passport.use(
+    // 使用passport-local
+    
+    passport.use(
         new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
           /* 好像有.then跟沒.then是一樣的?
           User.findOne({ email: email })
@@ -17,10 +22,9 @@ module.exports = passport => {
             return done(null, user)
           })
           */
-          User.findOne({ email: email }, function (err, user) {
+          User.findOne({ email: email }, (err, user) => {
             if (err) { return done(err)}
             if (!user) {
-              console.log(123)
                 return done(null, false, {message: '這個email不存在'} 
             )} 
             bcrypt.compare(password, user.password, (err, isMatch) => {
@@ -41,9 +45,43 @@ module.exports = passport => {
           })
           
         }
-      ))
+    ))
     
-    
+
+    // 使用passport-facebook
+    passport.use(
+        new FacebookStrategy({
+            clientID: process.env.FACEBOOK_ID,
+            clientSecret: process.env.FACEBOOK_SECRET,
+            callbackURL: process.env.FACEBOOK_CALLBACK,
+            profileFields: ['email', 'displayName']
+        }, (accessToken, refreshToken, profile, done) => {
+
+            User.findOne({ email: profile._json.email})
+            .then(user => {
+                if (!user) {
+                    let randomPassword = Math.random().toString(36).slice(-8)
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(randomPasword, salt, function(err, hash) {
+                            const newUser = new User({
+                                name :profile._json.name,
+                                email: profile._json.email,
+                                password: hash    
+                            })
+                            newUser.save().then(user=>{
+                                return done(null, user)
+                            }).catch(err => {
+                                console.log(err)
+                            })
+                        })
+                    })
+                } else {
+                    return done(null, user)
+                }
+            })
+      }
+    ))
+
     passport.serializeUser(function(user, done) {
         done(null, user.id)
     });   
