@@ -4,6 +4,8 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const mongoose = require('mongoose')
+const passport = require('passport')
+const session = require('express-session')
 
 // 使用moogoose
 mongoose.connect('mongodb://localhost/record', {
@@ -32,6 +34,13 @@ app.use(express.static('public'))
 
 // 使用method-override
 app.use(methodOverride('_method'))
+
+// 使用express-session
+app.use(session({
+    secret: 'gogopower',
+    resave: false,
+    saveUninitialized: true,
+}))
 
 // routes
 // /home
