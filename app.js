@@ -4,13 +4,14 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const mongoose = require('mongoose')
-const passport = require('passport')
 const session = require('express-session')
+const passport = require('passport')
 
 // 使用moogoose
 mongoose.connect('mongodb://localhost/record', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
 
 const db = mongoose.connection
@@ -41,6 +42,20 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }))
+
+// 使用passport
+app.use(passport.initialize())
+app.use(passport.session())
+
+// 使用config/passport.js
+require('./config/passport.js')(passport)
+
+// 儲存req.locals供views使用
+app.use((req, res, next) => {
+    res.locals.user = req.user
+    res.locals.isAuthenticated = req.isAuthenticated()
+    next()
+})
 
 // routes
 // /home

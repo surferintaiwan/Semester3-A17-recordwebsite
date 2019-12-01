@@ -1,19 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../models/record.js')
+const {authenticated} = require('../config/auth.js')
 
 // 新增資料頁面
-router.get('/new',(req,res) => {
+router.get('/new', authenticated, (req,res) => {
     res.render('new')
 })
 
 // 送出新增資料
-router.post('/new',(req,res) => {
+router.post('/new', authenticated, (req,res) => {
     /* 先找到全部的帳目，只取出各筆帳目的amount部分
     ，重新加總先前的的金額是多少，並加上現在要新增的金額，算出totalAmount要的數字
     ，後面再連同要新增的資料一起送去儲存
     */
-    Record.find({}, {amount: 1})
+    Record.find({userId:req.user._id}, {amount: 1})
         .exec((err, allRecordsWithAmount)=>{
             if (err) return console.log(err)
             let allAmount = 0
@@ -26,7 +27,8 @@ router.post('/new',(req,res) => {
                 category: req.body.category,
                 date: req.body.date,
                 amount: req.body.amount,
-                totalAmount: allAmount
+                totalAmount: allAmount,
+                userId: req.user._id
             })
             record.save( err => {
                 if (err) return console.log(err)
@@ -36,9 +38,9 @@ router.post('/new',(req,res) => {
 })
 
 // 編輯資料頁面
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', authenticated, (req, res) => {
     // 透過_id找到資料，顯示出它的頁面    
-    Record.findOne({_id: req.params.id}, (err, record) => {
+    Record.findOne({userId:req.user._id, _id: req.params.id}, (err, record) => {
         if (err) return console.log(err)
         // 要把取出的date轉成只有年月日的shortDate，最後丟回去給view使用
         let yy = record.date.getFullYear()
@@ -74,9 +76,9 @@ router.get('/edit/:id', (req, res) => {
 })
 
 // 送出編輯後資料頁面
-router.put('/:id/edit',(req,res) => {
+router.put('/:id/edit', authenticated, (req,res) => {
     // 透過_id找到要改的資料
-    Record.findOne({_id: req.params.id}, (err, record) => {
+    Record.findOne({userId:req.user._id, _id: req.params.id}, (err, record) => {
         record.name = req.body.name,
         record.category = req.body.category,
         record.date = req.body.date,
@@ -88,13 +90,13 @@ router.put('/:id/edit',(req,res) => {
     })
     
     // 接著找到最新_id的一筆資料，更新totalAmount
-    Record.findOne()
+    Record.findOne({userId:req.user._id})
     .sort({_id: -1})
     .select({totalAmount: 1})
     .exec((err, record) => {
         // 把所有資料的amount都拿出來加總
         let allAmount = 0
-        Record.find({}, {amount: 1})
+        Record.find({userId:req.user._id}, {amount: 1})
         .exec((err, allRecordsWithAmount) => {
             if (err) return console.log(err)
             for (eachAmount of allRecordsWithAmount) {
@@ -111,9 +113,9 @@ router.put('/:id/edit',(req,res) => {
 })
 
 // 送出刪除資料請求
-router.delete('/:id/delete', (req,res) => {
+router.delete('/:id/delete',authenticated , (req,res) => {
     // 刪除資料
-    Record.remove({_id: req.params.id}, (err) => {
+    Record.remove({userId:req.user._id, _id: req.params.id}, (err) => {
         if (err) return console.log(err)
     })
     // 更新最新一筆資料的totalAmount
@@ -123,7 +125,7 @@ router.delete('/:id/delete', (req,res) => {
         .exec((err, record) => {    
             // 把所有資料的amount拿出來加總
             let allAmount = 0
-            Record.find({}, {amount: 1})
+            Record.find({userId:req.user._id}, {amount: 1})
             .exec((err, allRecordsWithAmount) => {
                 if (err) return console.log(err)
                 for (eachAmount of allRecordsWithAmount) {

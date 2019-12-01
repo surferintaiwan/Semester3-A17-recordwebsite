@@ -3,14 +3,14 @@
         <div class="card">
             <h1 class="text-center">登入</h1>   
             <div class="card-body">
-                <form>
+                <form method="POST" action="/user/login">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="請輸入email">
+                        <input type="email" class="form-control" id="email" placeholder="請輸入email" name="email">
                     </div>
                     <div class="form-group">
                         <label for="password1">密碼</label>
-                        <input type="password" class="form-control" id="password1" placeholder="請輸入密碼">
+                        <input type="password" class="form-control" id="password1" placeholder="請輸入密碼" name="password">
                     </div>
                     
                     

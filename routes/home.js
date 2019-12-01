@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../models/record.js')
+const {authenticated} = require('../config/auth.js')
 
-router.get('/', (req, res) => {
-    Record.find()
+router.get('/', authenticated, (req, res) => {
+    Record.find({userId:req.user._id})
         .sort({date: 'desc'})
         .exec((err, allRecords) => {
             if (err) return console.log(err)
@@ -40,7 +41,7 @@ router.get('/', (req, res) => {
             })
             console.log(xx)
             */
-            Record.findOne()
+            Record.findOne({userId:req.user._id})
                 .sort({_id: -1})
                 .select({totalAmount: 1})
                 .exec((err, record) => {
@@ -61,7 +62,7 @@ router.get('/', (req, res) => {
 })
 
 // 使用者在首頁選擇不同類別，會顯示不同類別資料
-router.get('/:category', (req, res) => {
+router.get('/:category', authenticated, (req, res) => {
     let categoryForFind = {}
     let categoryForH1 = req.params.category
     if (req.params.category === 'housing') {
@@ -75,7 +76,8 @@ router.get('/:category', (req, res) => {
     } else if (req.params.category === 'other') {
         categoryForFind.category = 'other'
     }    
-    Record.find(categoryForFind)
+    Record.find({userId:req.user._id})
+            .find(categoryForFind)
             .sort({date: 'desc'})
             .exec((err, allRecords) => {
                 let totalAmount = 0

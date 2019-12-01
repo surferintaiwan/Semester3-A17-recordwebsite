@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user.js')
+const passport = require('passport')
 
 // 註冊頁面
 router.get('/register', (req, res)=>{
     res.render('register')
-    
 })
 
 // 送出註冊資料
@@ -35,25 +35,27 @@ router.post('/register', (req, res)=>{
                     if (err) return console.log(err)
                     return res.redirect('/user/login')
                 })
-                
-            }
-            
+            } 
         })
 })
 
 // 登入頁面
-router.get('/login', (req, res)=>{
+router.get('/login', (req, res) => {
     res.render('login')
 })
 
 // 送出登入資料
-router.post('/login', (req, res)=>{
-
+router.post('/login', (req, res, next)=>{
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/user/login' 
+    })(req, res, next)
 })
 
 // 登出
-router.post('/login', (req, res)=>{
-
+router.get('/logout', (req, res)=>{
+    req.logout()
+    res.redirect('/user/login')
 })
 
 // facebook登入用
