@@ -7,7 +7,6 @@ const bcrypt = require('bcryptjs')
 
 module.exports = passport => {
     // 使用passport-local
-    
     passport.use(
         new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
           /* 好像有.then跟沒.then是一樣的?
@@ -25,7 +24,7 @@ module.exports = passport => {
           User.findOne({ email: email }, (err, user) => {
             if (err) { return done(err)}
             if (!user) {
-                return done(null, false, {message: '這個email不存在'} 
+                return done(null, false, {message:'email還未註冊'}
             )} 
             bcrypt.compare(password, user.password, (err, isMatch) => {
               if (err) throw err
@@ -47,7 +46,6 @@ module.exports = passport => {
         }
     ))
     
-
     // 使用passport-facebook
     passport.use(
         new FacebookStrategy({
@@ -56,7 +54,6 @@ module.exports = passport => {
             callbackURL: process.env.FACEBOOK_CALLBACK,
             profileFields: ['email', 'displayName']
         }, (accessToken, refreshToken, profile, done) => {
-
             User.findOne({ email: profile._json.email})
             .then(user => {
                 if (!user) {

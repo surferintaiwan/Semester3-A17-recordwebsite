@@ -6,6 +6,7 @@ const methodOverride = require('method-override')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const passport = require('passport')
+const flash = require('connect-flash')
 
 // 判別開發環境，使用環境變數
 if (process.env.NODE_ENV !== 'production') {      
@@ -13,7 +14,7 @@ if (process.env.NODE_ENV !== 'production') {
   }
 
 // 使用moogoose
-mongoose.connect('mongodb://localhost/record', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/record', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true
@@ -55,10 +56,14 @@ app.use(passport.session())
 // 使用config/passport.js
 require('./config/passport.js')(passport)
 
+// 使用connect-flash
+app.use(flash())
 // 儲存req.locals供views使用
 app.use((req, res, next) => {
     res.locals.user = req.user
     res.locals.isAuthenticated = req.isAuthenticated()
+    res.locals.success_msg = req.flash('success_msg')
+    res.locals.warning_msg = req.flash('warning_msg')
     next()
 })
 

@@ -15,35 +15,53 @@ router.post('/register', (req, res)=>{
     User.findOne({email: email})
         .exec((err, user)=>{            
             // 檢查是否註冊過
+            let errors = []
             if (user) {
-                console.log('已經註冊過')
-                res.redirect('/user/login')
-            } else {
-                // 檢查名字、email、密碼1、密碼2是否都有輸入
-                if (!name || !email || !password || !password2) {
-                    console.log('有東西沒填')
-                }
-                // 檢查兩次密碼是否相同
-                if (password !== password2) {
-                    console.log('兩次密碼不一樣')
-                }
-                const newUser = new User({
+                errors.push('註冊過了')
+                return res.render('register', {
+                    errors: errors,
                     name: name,
                     email: email,
                     password: password,
+                    password2: password2    
                 })
-                // 使用bcryptjs將密碼處理過
-                bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        // Store hash in your password DB.
-                        newUser.password = hash
-                        newUser.save(err => {    
-                            if (err) return console.log(err)
-                            return res.redirect('/user/login')
+            } else {
+                // 檢查名字、email、密碼1、密碼2是否都有輸入
+                if (!name || !email || !password || !password2) {
+                    errors.push('所有欄位都要填喔')
+                }
+                // 檢查兩次密碼是否相同
+                if (password !== password2) {
+                    errors.push('兩次密碼不一樣')
+                }
+                console.log(errors)
+                // 判斷有任何錯誤，就送他回註冊頁
+                if (errors.length > 0) {
+                    return res.render('register', {
+                        errors: errors,
+                        name: name,
+                        email: email,
+                        password: password,
+                        password2: password2
+                    })
+                } else {
+                    const newUser = new User({
+                        name: name,
+                        email: email,
+                        password: password,
+                    })
+                    // 使用bcryptjs將密碼處理過
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                            // Store hash in your password DB.
+                            newUser.password = hash
+                            newUser.save(err => {    
+                                if (err) return console.log(err)
+                                return res.redirect('/user/login')
+                            })
                         })
                     })
-                })
-                
+                }
             } 
         })
 })
@@ -57,13 +75,15 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res, next)=>{
     passport.authenticate('local', {
         successRedirect: '/',
-        failureRedirect: '/user/login' 
+        failureRedirect: '/user/login',
+        failureFlash: true
     })(req, res, next)
 })
 
 // 登出
 router.get('/logout', (req, res)=>{
     req.logout()
+    req.flash('success_msg', '已登出')
     res.redirect('/user/login')
 })
 
