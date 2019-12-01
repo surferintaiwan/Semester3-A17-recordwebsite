@@ -78,7 +78,7 @@ app.use('/record', require('./routes/record.js'))
 app.use('/auth', require('./routes/auth.js'))
 
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('http://localhost:3000 is listening!')
 })
 
