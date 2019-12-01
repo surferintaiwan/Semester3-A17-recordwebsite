@@ -1,14 +1,14 @@
 # 線上記帳-可註冊、登入、登出、新增餐廳資料
 此網站使用node.js環境 + Express + mongoDB建立而成。
-可供用戶註冊、登入、登出，建立專屬於自己收藏的美食餐廳資料。
+可供用戶註冊、登入、登出，管理自己每日消費紀錄。
 --
 ## 網站截圖
-![網站截圖]()
+![網站截圖](https://raw.githubusercontent.com/surferintaiwan/Semester3-A17-recordwebsite/master/login-page.png)
 
 ---
 
 ## Heroku demo link
-展示連結(https://recordwebsite.herokuapp.com/user/login)
+[展示連結](https://recordwebsite.herokuapp.com/user/login)
 
 
 ## 功能說明
@@ -19,9 +19,7 @@
 
 <若於登入後>
 
-5. 可瀏覽自己新增的所有帳目
-一進入[首頁](http://localhost:3000/)，可瀏覽目前網站內所有店家
-
+5. 首頁可瀏覽自己新增的所有帳目
 6. 亦可瀏覽不同類別帳目，系統會顯示該類別帳目總金額
 7. 可新增帳目
 填寫帳目名稱、日期、金額、類別
