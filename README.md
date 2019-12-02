@@ -49,8 +49,8 @@ npm install
 npm run seeder
 ```
 可用以下兩位使用者email及密碼登入進行測試，每個使用者皆以內含3筆帳目
-* 使用者1: email: 1@test.com, 密碼:123456789
-* 使用者2: email: 1@test.com, 密碼:987654321
+* 使用者1小明: email: 1@test.com, 密碼:123456789
+* 使用者2小王: email: 2@test.com, 密碼:987654321
 
 
 5. 新增環境變數.env檔案
