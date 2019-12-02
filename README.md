@@ -43,12 +43,15 @@ cd Semester3-A17-recordwebsite
 ```
 npm install
 ```
-4. 於終端機運行/seeds/seeder.js
+4. 於終端機運行種子資料方便測試/seeds/seeder.js
 
 ```
 npm run seeder
 ```
-(seeder檔案仍在撰寫中...)
+可用以下兩位使用者email及密碼登入進行測試，每個使用者皆以內含3筆帳目
+* 使用者1: email: 1@test.com, 密碼:123456789
+* 使用者2: email: 1@test.com, 密碼:987654321
+
 
 5. 新增環境變數.env檔案
 由於設置passport.facebook時，需要輸入你在facebook developer申請的app帳號跟密碼，有將之儲存在.env中，並且把.env放進.gitignore，這樣在上傳gitghub時，就不會看到環境變數。
