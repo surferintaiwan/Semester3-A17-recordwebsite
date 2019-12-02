@@ -17,6 +17,7 @@ router.post('/new', authenticated, (req,res) => {
     Record.find({userId:req.user._id}, {amount: 1})
         .exec((err, allRecordsWithAmount)=>{
             if (err) return console.log(err)
+            // 把所有資料的amount都拿出來加總
             let allAmount = 0
             for (eachAmount of allRecordsWithAmount) {
                 allAmount += eachAmount.amount
