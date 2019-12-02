@@ -48,7 +48,7 @@ router.get('/:category', authenticated, (req, res) => {
         categoryForFind.category = 'food'
     } else if (req.params.category === 'other') {
         categoryForFind.category = 'other'
-    }    
+    } 
     Record.find({userId:req.user._id})
             .find(categoryForFind)
             .sort({date: 'desc'})

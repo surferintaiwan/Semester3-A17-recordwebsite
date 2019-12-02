@@ -34,7 +34,8 @@ module.exports = passport => {
                 return done(null, false, {message: 'email或密碼錯誤'})
               }
             })
-            /* 這是使用bcrypt.compare()進行比對前的寫法
+            
+            /* 紀錄一下，這是使用bcrypt.compare()進行比對前的寫法
             if (user.password !== password) { 
               console.log(223)
                 return done(null, false, {message: 'email或密碼輸入錯誤'} 
@@ -59,7 +60,7 @@ module.exports = passport => {
                 if (!user) {
                     let randomPassword = Math.random().toString(36).slice(-8)
                     bcrypt.genSalt(10, (err, salt) => {
-                        bcrypt.hash(randomPasword, salt, function(err, hash) {
+                        bcrypt.hash(randomPassword, salt, function(err, hash) {
                             const newUser = new User({
                                 name :profile._json.name,
                                 email: profile._json.email,
