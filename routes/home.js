@@ -13,7 +13,6 @@ router.get('/', authenticated, (req, res) => {
             為了變成只有年月日，把allRecords陣列取出來，
             針對每個物件的date另存成shortDate轉成只有年月日
             */
-            
             Record.findOne({userId:req.user._id})
                 .sort({_id: -1})
                 .select({totalAmount: 1})

@@ -1,16 +1,16 @@
 <form action="/record/{{record.id}}/edit?_method=PUT" method="POST">
   <div class="form-group">
     <label for="name">名稱*</label>
-    <input type="text" class="form-control" id="name" placeholder="請輸入支出名稱" name="name" value="{{record.name}}">
+    <input type="text" class="form-control" id="name" placeholder="請輸入支出名稱" name="name" value="{{record.name}}" required>
   </div>
   <div class="form-group">
     <label for="date">日期*</label>
-    <input type="date" class="form-control" id="date" placeholder="請輸入日期" name="date" value="{{date}}">
+    <input type="date" class="form-control" id="date" placeholder="請輸入日期" name="date" value="{{date}}" required>
   </div>
   <div class="form-group">
       <label for="category">類別*</label>
-      <select id="category" class="form-control" name="category">
-        <option disabled>選擇類別</option>
+      <select id="category" class="form-control" name="category" required>
+        <option value="" disabled>選擇類別</option>
         <option value="housing" {{#if category.housing}} selected {{/if}}>家居物業</option>
         <option value="transportation" {{#if category.transportation}} selected {{/if}}>交通出行</option>
         <option value="entertainment" {{#if category.entertainment}} selected {{/if}}>休閒娛樂</option>
@@ -20,7 +20,7 @@
   </div>
   <div class="form-group">
     <label for="amount">金額*</label>
-    <input type="text" class="form-control" id="amount" placeholder="請輸入金額" name="amount" value="{{record.amount}}"> 
+    <input type="text" class="form-control" id="amount" placeholder="請輸入金額" name="amount" value="{{record.amount}}" required> 
   </div>
   <button type="submit" class="btn btn-primary">儲存</button>
 </form>
