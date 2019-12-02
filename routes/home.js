@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../models/record.js')
+const User = require('../models/user.js')
 const {authenticated} = require('../config/auth.js')
 
 router.get('/', authenticated, (req, res) => {
