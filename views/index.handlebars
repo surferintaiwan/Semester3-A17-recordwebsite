@@ -20,8 +20,7 @@
         {{#each records}}
         <div class="row mt-2">
             {{{this.icon}}}
-            <div class="row col-6">
-            
+            <div class="col-6">
                 <div class="m-auto">
                     <div>{{this.name}}</div>
                     <div>{{this.date}}</div>
@@ -30,7 +29,7 @@
                     $<span>{{this.amount}}</span>   
                 </div>
             </div>
-            <div class="row col-4">
+            <div class="col-4">
                 <a href="/record/edit/{{this._id}}" class="btn btn-secondary">修改</a>
                 <button type="submit" class="btn btn-outline-warning ml-2" data-toggle="modal" data-target="#deleteModal" data-name="{{this.name}}" data-id="{{this.id}}">刪除</button>
             </div>

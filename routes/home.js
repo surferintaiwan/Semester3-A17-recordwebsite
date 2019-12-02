@@ -37,15 +37,15 @@ router.get('/', authenticated, (req, res) => {
                 } 
                 // 判斷不同類別將相應的icon存入新陣列
                 if (eachRecord.category === 'housing') {
-                    eachRecordInObject.icon = '<i class="fas fa-home col-2" style="font-size: 50px"></i>'
+                    eachRecordInObject.icon = '<i class="col-2 fas fa-home col-2" style="font-size: 50px"></i>'
                 } else if (eachRecord.category === 'transportation') {
-                    eachRecordInObject.icon = '<i class="fas fa-shuttle-van" style="font-size: 50px"></i>'
+                    eachRecordInObject.icon = '<i class="col-2 fas fa-shuttle-van" style="font-size: 50px"></i>'
                 } else if (eachRecord.category === 'entertainment') {
-                    eachRecordInObject.icon = '<i class="fas fa-grin-beam" style="font-size: 50px"></i>'
+                    eachRecordInObject.icon = '<i class="col-2 fas fa-grin-beam" style="font-size: 50px"></i>'
                 } else if (eachRecord.category === 'food') {
-                    eachRecordInObject.icon = '<i class="fas fa-utensils" style="font-size: 50px"></i>'
+                    eachRecordInObject.icon = '<i class="col-2 fas fa-utensils" style="font-size: 50px"></i>'
                 } else if (eachRecord.category === 'other') {
-                    eachRecordInObject.icon = '<i class="fas fa-pen" style="font-size: 50px"></i>'
+                    eachRecordInObject.icon = '<i class="col-2 fas fa-pen" style="font-size: 50px"></i>'
                 }
                 newAllRecords.push(eachRecordInObject)
             })
