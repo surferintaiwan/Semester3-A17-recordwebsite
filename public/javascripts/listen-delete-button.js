@@ -13,5 +13,4 @@ allRecords.addEventListener('click', function() {
         formForDelete.action = "/record/" + id + "/delete?_method=DELETE"
         console.log(formForDelete)   
     }
-
 })
