@@ -38,9 +38,6 @@ router.get('/', authenticated, (req, res) => {
     let userId = req.user._id
     let queryCategory = req.query.category || ''
     let queryDate = req.query.date || ''
-    console.log(queryCategory)
-    console.log(req.query.date)
-    console.log(queryDate)
     if (queryCategory === '' && queryDate === '') {
         findSetting = {userId}
     } else if (queryCategory === '' && queryDate) {
@@ -66,8 +63,6 @@ router.get('/', authenticated, (req, res) => {
             }
         }
     }
-    console.log(findSetting)
-    
     Record.find(findSetting)
         .sort({date: 'desc'})
         .exec((err, allRecords) => {

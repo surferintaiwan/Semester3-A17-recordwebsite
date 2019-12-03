@@ -6,7 +6,7 @@ category.addEventListener('change', () => {
     }
 })
 
-date.addEventListener('click', () => {
+date.addEventListener('change', () => {
     if (date.value !== '') {
         date.parentElement.parentElement.parentElement.submit() 
     } 
