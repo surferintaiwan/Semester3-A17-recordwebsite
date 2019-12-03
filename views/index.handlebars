@@ -1,17 +1,26 @@
 <div class="text-center">
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle mt-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            請選擇類別
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a href="/" class="dropdown-item">不分類</a>
-            <a href="/housing" class="dropdown-item">家居物業</a>
-            <a href="/transportation" class="dropdown-item">交通出行</a>
-            <a href="/entertainment" class="dropdown-item">休閒娛樂</a>
-            <a href="/food" class="dropdown-item">餐飲食品</a>
-            <a href="/other" class="dropdown-item">其他</a>
+    <form class="row mt-4">
+        <div class="dropdown col-6">
+            <div class="form-group">
+                <label for="date">請選擇年月</label>
+                <input type="month" class="form-control" id="date" name="date" value="{{dateInput}}">   
+            </div>
         </div>
-    </div>
+        <div class="dropdown col-6">
+            <div class="form-group">
+                <label for="dropdownMenuButton" style="display: block">請選擇類別</label>
+                <select name="category" id="category" class="form-control">
+                    <option value="" selected>不分類</option>
+                    <option value="housing" {{#if categorySelected.housing}}selected{{/if}}>家居物業</option>
+                    <option value="transportation" {{#if categorySelected.transportation}}selected{{/if}}>交通出行</option>
+                    <option value="entertainment" {{#if categorySelected.entertainment}}selected{{/if}}>休閒娛樂</option>
+                    <option value="food" {{#if categorySelected.food}}selected{{/if}}>餐飲食品</option>
+                    <option value="other" {{#if categorySelected.other}}selected{{/if}}>其他</option>
+                </select>
+            </div>  
+        </div>
+    </form>
+    
     <h1>{{category.forH1}}</h1>
     <div class="">
         總金額:<span class="display-2">{{totalAmount}}</span>
@@ -52,7 +61,7 @@
                     <form method="POST" class="d-inline" id="formForDelete">
                         <button type="submit" class="btn btn-primary">確定</button>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"">取消</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                 </div>        
             </div>
         </div>
