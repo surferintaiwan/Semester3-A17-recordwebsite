@@ -63,6 +63,8 @@ router.get('/', authenticated, (req, res) => {
             }
         }
     }
+
+    // 找出符合條件的資料
     Record.find(findSetting)
         .sort({date: 'desc'})
         .exec((err, allRecords) => {
