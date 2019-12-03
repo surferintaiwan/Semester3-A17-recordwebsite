@@ -26,11 +26,11 @@ router.get('/', authenticated, (req, res) => {
     
     // 再將首頁選擇年月的值準備好
     let dateInput = req.query.date
-    let mm = ''
-    let yy = ''
+    let month = ''
+    let year = ''
     if (dateInput) {
-        mm =  dateInput.slice(5, 7)
-        yy = dateInput.slice(0, 4)
+        month =  dateInput.slice(5, 7)
+        year = dateInput.slice(0, 4)
     }
 
     // 將類別跟年月組合起來
@@ -44,8 +44,8 @@ router.get('/', authenticated, (req, res) => {
         findSetting = {
             userId,
             date: {
-                $gte: new Date(`${yy}-${mm}-01`) ,
-                $lte: new Date(`${yy}-${mm}-31`)
+                $gte: new Date(`${year}-${month}-01`) ,
+                $lte: new Date(`${year}-${month}-31`)
             }
         }
     } else if (queryCategory && queryDate === '') {
@@ -58,8 +58,8 @@ router.get('/', authenticated, (req, res) => {
             userId,
             category ,
             date: {
-                $gte: new Date(`${yy}-${mm}-01`) ,
-                $lte: new Date(`${yy}-${mm}-31`)
+                $gte: new Date(`${year}-${month}-01`) ,
+                $lte: new Date(`${year}-${month}-31`)
             }
         }
     }
@@ -85,6 +85,9 @@ router.get('/', authenticated, (req, res) => {
             let newAllRecords = []
             let totalAmount = 0
             allRecords.forEach((eachRecord)=>{
+                let yy = eachRecord.date.getFullYear()
+                let mm = eachRecord.date.getMonth() + 1
+                let dd = eachRecord.date.getDate()
                 let eachRecordInObject = {
                     _id:eachRecord._id,
                     name: eachRecord.name,
@@ -93,8 +96,10 @@ router.get('/', authenticated, (req, res) => {
                     amount: eachRecord.amount,
                     totalAmount: eachRecord.totalAmount,
                     userId: eachRecord.userId,
+                    shortDate: `${yy}-${mm}-${dd}`
                 }
-                // 判斷不同類別將相應的icon存入新陣列中的object
+                
+                // 判斷不同類別將相應的icon，存入新陣列中的object
                 if (eachRecord.category === 'housing') {
                     eachRecordInObject.icon = '<i class="col-2 fas fa-home col-2" style="font-size: 50px"></i>'
                 } else if (eachRecord.category === 'transportation') {
