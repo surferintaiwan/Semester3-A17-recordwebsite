@@ -35,32 +35,15 @@ router.get('/', authenticated, (req, res) => {
 
     // 將類別跟年月組合起來
     let findSetting = {}
-    let userId = req.user._id
     let queryCategory = req.query.category || ''
     let queryDate = req.query.date || ''
-    if (queryCategory === '' && queryDate === '') {
-        findSetting = {userId}
-    } else if (queryCategory === '' && queryDate) {
-        findSetting = {
-            userId,
-            date: {
+    findSetting.userId = req.user._id
+    if (queryCategory) {
+        findSetting.category = category
+    } else if (queryDate) {
+        findSetting.date = {
                 $gte: new Date(`${year}-${month}-01`) ,
                 $lte: new Date(`${year}-${month}-31`)
-            }
-        }
-    } else if (queryCategory && queryDate === '') {
-        findSetting = {
-            userId,
-            category
-        }
-    } else if (queryCategory && queryDate) {
-        findSetting = {
-            userId,
-            category ,
-            date: {
-                $gte: new Date(`${year}-${month}-01`) ,
-                $lte: new Date(`${year}-${month}-31`)
-            }
         }
     }
 
